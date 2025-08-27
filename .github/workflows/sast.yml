@@ -8,7 +8,7 @@ on:
 
 permissions:
   statuses: write
-  content: read
+  contents: read
 
 name: Main Workflow
 jobs:
