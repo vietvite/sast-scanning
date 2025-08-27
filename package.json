@@ -1,0 +1,13 @@
+{
+  "name": "sast-scanning",
+  "version": "1.0.0",
+  "description": "A sample Node.js app with a known vulnerability",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "4.17.1",
+    "sqlite3": "^5.1.7"
+  }
+}
