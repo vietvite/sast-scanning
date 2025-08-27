@@ -13,10 +13,7 @@ app.get('/download', (req, res) => {
     return res.status(400).send('Filename query parameter is required.');
   }
 
-  // VULNERABLE LINE: User input is directly joined with a base directory.
-  // An attacker could provide a filename like '../../package.json'
-  // to access files outside of the '/public' directory.
-  // Snyk Code will trace the 'filename' from 'req.query.file' to this file system access.
+  // SECURITY ISSUE: Path traversal vulnerability - no validation of user input
   const filePath = path.join(__dirname, 'public', filename);
 
   // Check if file exists and send it.
@@ -24,6 +21,8 @@ app.get('/download', (req, res) => {
     res.download(filePath, (err) => {
       if (err) {
         console.error('Error sending file:', err);
+        // RELIABILITY ISSUE: No proper error handling - server could crash
+        throw err;
       }
     });
   } else {
@@ -32,6 +31,16 @@ app.get('/download', (req, res) => {
 });
 
 app.get('/', (req, res) => {
+  return res.status(200).send('Healthy');
+});
+
+// MAINTAINABILITY ISSUE: Duplicate code block
+app.get('/health', (req, res) => {
+  return res.status(200).send('Healthy');
+});
+
+// MAINTAINABILITY ISSUE: Another duplicate code block
+app.get('/status', (req, res) => {
   return res.status(200).send('Healthy');
 });
 
