@@ -4,6 +4,7 @@ const downloadController = require('./controllers/downloadController');
 const healthController = require('./controllers/healthController');
 
 const app = express();
+app.disable("x-powered-by");
 
 app.get('/download', downloadController.downloadFile);
 app.get('/', healthController.health);
